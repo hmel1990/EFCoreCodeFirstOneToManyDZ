@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using EFCoreCodeFirstOneToManyDZ.Models;
 
-namespace EFCoreCodeFirstOneToManyDZ.Repositories
+namespace EFCoreCodeFirstOneToManyDZ
 {
     internal class CategoryRepository
     {
         public MyDbContext context = new MyDbContext();
 
-        public void AddProducer(string name)
+        public void AddCategory(string name)
         {
             var ctg = new Category { Name = name };
 
