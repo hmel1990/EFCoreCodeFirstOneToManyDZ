@@ -24,4 +24,6 @@ public partial class User
     public virtual Order? IdOrderNavigation { get; set; }
 
     public virtual Review? IdReviewNavigation { get; set; }
+
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 }

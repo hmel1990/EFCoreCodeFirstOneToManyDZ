@@ -24,19 +24,22 @@ namespace EFCoreCodeFirstOneToManyDZ.Repositories
             foreach (var item in ListOfReviews)
             {
                 var product = context.Products.FirstOrDefault(p => p.Id == item.IdProduct);
+                var user = context.Users.FirstOrDefault(p => p.Id == item.IdUser);
 
-                Console.WriteLine("товар \t отзыв");
-                Console.WriteLine($"{product.Name} \t {item.Text}");
+
+                Console.WriteLine("пользователь \t товар \t отзыв");
+                Console.WriteLine($"{user.Username} \t {product.Name} \t {item.Text}");
             }
             return ListOfReviews;
         }
         public Review GetById(int id)
         {
-            var product = context.Products.FirstOrDefault(p => p.Id == id);
             var rvw = context.Reviews.FirstOrDefault(p => p.Id == id);
+            var product = context.Products.FirstOrDefault(p => p.Id == rvw.IdProduct);
+            var user = context.Users.FirstOrDefault(p => p.Id == rvw.IdUser);
 
-            Console.WriteLine("товар \t отзыв");
-            Console.WriteLine($"{product.Name} \t {rvw.Text}");
+            Console.WriteLine("пользователь \t товар \t отзыв");
+            Console.WriteLine($"{user.Username} \t {product.Name} \t {rvw.Text}");
             return rvw;
         }
         public void Update(int id, string text)

@@ -32,8 +32,8 @@ namespace EFCoreCodeFirstOneToManyDZ.Repositories
         }
         public Order GetById(int id)
         {
-            var ordrName = context.Products.FirstOrDefault(p => p.Id == id);
             var ordr = context.Orders.FirstOrDefault(p => p.Id == id);
+            var ordrName = context.Products.FirstOrDefault(p => p.Id == ordr.IdProduct);
 
             Console.WriteLine("Наименование \t количество");
             Console.WriteLine($"{ordrName.Name} \t {ordr.Quantity}");
