@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using EFCoreCodeFirstOneToManyDZ.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreCodeFirstOneToManyDZ.Models;
+namespace EFCoreCodeFirstOneToManyDZ;
 
 public partial class MyDbContext : DbContext
 {
