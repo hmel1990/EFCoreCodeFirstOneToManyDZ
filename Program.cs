@@ -1,4 +1,5 @@
 ﻿using EFCoreCodeFirstOneToManyDZ.Models;
+using EFCoreCodeFirstOneToManyDZ.Repositories;
 
 namespace EFCoreCodeFirstOneToManyDZ
 {
@@ -25,7 +26,12 @@ namespace EFCoreCodeFirstOneToManyDZ
             //}
             var ct = new CategoryRepository();
             ct.AddCategory("Молочные продукты");
-            
+            var usr = new UserRepository();
+            usr.AddUser("Max", "111", "customer");
+            var prt = new ProductRepository();
+            prt.AddProduct("Молочные продукты", "молоко", 10, 2, "Гормолзавод");
+            var rvw = new ReviewRepository();
+            rvw.AddReview("текст");
         }
     }
 }

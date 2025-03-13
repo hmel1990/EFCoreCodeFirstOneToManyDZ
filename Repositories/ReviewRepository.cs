@@ -14,7 +14,6 @@ namespace EFCoreCodeFirstOneToManyDZ.Repositories
         public void AddReview(string review)
         {
             var rvw = new Review { Text = review };
-
             context.Reviews.Add(rvw);
             context.SaveChanges();
         }

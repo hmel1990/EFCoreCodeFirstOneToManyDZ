@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCoreCodeFirstOneToManyDZ.Models;
 
 public partial class User
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required(ErrorMessage = "Имя обязательно для заполнения")]
+    [StringLength(100, ErrorMessage = "Имя не может превышать 100 символов")]
     public string Username { get; set; } = null!;
-
+    [Required(ErrorMessage = "Имя обязательно для заполнения")]
     public string Password { get; set; } = null!;
 
     public string Access { get; set; } = null!;
