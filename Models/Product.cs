@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace EFCoreCodeFirstOneToManyDZ.Models;
+namespace EFCoreCodeFirstOneToManyDZ;
+
 
 public partial class Product
 {
-    [Key]
     public int Id { get; set; }
 
     public int? IdCategory { get; set; }
 
-    [Required(ErrorMessage = "Название обязательно для заполнения")]
-    [StringLength(100, ErrorMessage = "Имя не может превышать 100 символов")]
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    [Required(ErrorMessage = "цена обязательна для заполнения")]
-    public double? Price { get; set; }
+    public double Price { get; set; }
 
-    [Range(0, 100, ErrorMessage = "количество должно быть в пределах от 0 до 1000")]
     public int? Quantity { get; set; }
 
     public byte[]? ProductPicture { get; set; }

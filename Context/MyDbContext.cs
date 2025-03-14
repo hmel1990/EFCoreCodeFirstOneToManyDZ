@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using EFCoreCodeFirstOneToManyDZ.Models;
+using EFCoreCodeFirstOneToManyDZ;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreCodeFirstOneToManyDZ;
+namespace EFCoreCodeFirstOneToManyDZ.Context;
 
 public partial class MyDbContext : DbContext
 {
@@ -48,6 +48,8 @@ public partial class MyDbContext : DbContext
         {
             entity.ToTable("Order");
 
+            entity.HasIndex(e => e.IdProduct, "IX_Order_id_product");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdProduct).HasColumnName("id_product");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
@@ -62,12 +64,18 @@ public partial class MyDbContext : DbContext
             entity.ToTable("Producer");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Name).HasColumnName("name");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName("name");
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("Product");
+
+            entity.HasIndex(e => e.IdCategory, "IX_Product_id_category");
+
+            entity.HasIndex(e => e.IdProducer, "IX_Product_id_producer");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdCategory).HasColumnName("id_category");
@@ -93,31 +101,37 @@ public partial class MyDbContext : DbContext
         {
             entity.ToTable("Review");
 
+            entity.HasIndex(e => e.IdProduct, "IX_Review_id_product");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdProduct).HasColumnName("id_product");
-            entity.Property(e => e.Text).HasColumnName("text");
+            entity.Property(e => e.Text)
+                .HasMaxLength(500)
+                .HasColumnName("text");
 
             entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.IdProduct)
                 .HasConstraintName("FK_Review_Product");
+
+            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.IdUser)
+                .HasConstraintName("FK_Review_User");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("User");
 
+            entity.HasIndex(e => e.IdOrder, "IX_User_id_order");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Access).HasMaxLength(50);
             entity.Property(e => e.IdOrder).HasColumnName("id_order");
-            entity.Property(e => e.IdReview).HasColumnName("id_review");
+            entity.Property(e => e.Username).HasMaxLength(100);
 
             entity.HasOne(d => d.IdOrderNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdOrder)
                 .HasConstraintName("FK_User_Order");
-
-            entity.HasOne(d => d.IdReviewNavigation).WithMany(p => p.Users)
-                .HasForeignKey(d => d.IdReview)
-                .HasConstraintName("FK_User_Review");
         });
 
         OnModelCreatingPartial(modelBuilder);

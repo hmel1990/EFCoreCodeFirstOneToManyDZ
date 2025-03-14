@@ -1,37 +1,37 @@
-﻿using EFCoreCodeFirstOneToManyDZ.Models;
+﻿using EFCoreCodeFirstOneToManyDZ;
 using EFCoreCodeFirstOneToManyDZ.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace EFCoreCodeFirstOneToManyDZ
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-
-            //using (var context = new MyDbContext())
-            //{
-            //    var c = new Category() { Name = "TEST" };
-            //    context.Categories.Add(c);
-            //    context.SaveChanges();
-
-            //    var categories = context.Categories
-            //                            .Where(c => c.Id > 0)
-            //                            .ToList();
-
-
-            //    foreach (var category in categories)
-            //    {
-            //        Console.WriteLine($"ID: {category.Id}, Name: {category.Name}");
-            //    }
-            //}
             //var ct = new CategoryRepository();
             //ct.AddCategory("Молочные продукты");
             var usr = new UserRepository();
             //usr.AddUser("Max", "111", "customer");
+            //usr.AddUser("Alex", "111", "customer");
+            //usr.AddUser("Igor", "111", "customer");
+            //usr.AddUser("Daniel", "111", "customer");
+            //usr.AddUser("Sasha", "111", "customer");
+            //usr.AddUser("Maria", "111", "customer");
+
             //var prt = new ProductRepository();
             //prt.AddProduct("Молочные продукты", "молоко", 10, 2, "Гормолзавод");
             var rvw = new ReviewRepository();
-            rvw.AddReview("текст6");
+            //rvw.AddReview("text1");
+            //rvw.AddReview("text2");
+            //rvw.AddReview("text3");
+            //rvw.AddReview("text4");
+            //rvw.AddReview("text5");
+            //rvw.AddReview("text6");
+
+            usr.GetAllPeopleWithReviews();
+
+
         }
     }
 }

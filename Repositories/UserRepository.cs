@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EFCoreCodeFirstOneToManyDZ.Models;
+using EFCoreCodeFirstOneToManyDZ.Context;
+using EFCoreCodeFirstOneToManyDZ;
 
 namespace EFCoreCodeFirstOneToManyDZ.Repositories
 {
@@ -28,7 +29,27 @@ namespace EFCoreCodeFirstOneToManyDZ.Repositories
             }
             return ListOfUsers;
         }
-        public User GetById(int id)
+
+
+        public void GetAllPeopleWithReviews()
+        {
+
+            var people = context.Users?.ToList(); // загружаем людей
+
+            foreach (var user in people)
+            {
+                Console.WriteLine($"Человек: {user.Username}");
+
+                //отложенная загрузка: увлечения загружаются только при обращении к ним
+                foreach (var review in user.Reviews)
+                {
+                    Console.WriteLine($"Отзыв: {review.Text}");
+                }
+            }
+        }
+      
+
+            public User GetById(int id)
         {
             var usr = context.Users.FirstOrDefault(u => u.Id == id);
             Console.WriteLine($"{usr.Username}\t {usr.Password}\t {usr.Access}");
