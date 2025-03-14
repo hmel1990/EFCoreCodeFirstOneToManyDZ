@@ -31,7 +31,6 @@ namespace EFCoreCodeFirstOneToManyDZ
 
             usr.GetAllPeopleWithReviews();
 
-
         }
     }
 }

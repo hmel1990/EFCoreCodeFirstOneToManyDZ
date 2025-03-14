@@ -47,9 +47,9 @@ namespace EFCoreCodeFirstOneToManyDZ.Repositories
                 }
             }
         }
-      
 
-            public User GetById(int id)
+
+        public User GetById(int id)
         {
             var usr = context.Users.FirstOrDefault(u => u.Id == id);
             Console.WriteLine($"{usr.Username}\t {usr.Password}\t {usr.Access}");

@@ -24,7 +24,7 @@ namespace EFCoreCodeFirstOneToManyDZ.Tests
             _context = new ApplicationDbContext(options);
         }
 
-        [Test] // таким аттрибутом помечаются все обычные тестовые методы
+        [Test]
         public void AddUser_ShouldReturnPeople()
         {
             // подготоваливаем данные
@@ -41,9 +41,65 @@ namespace EFCoreCodeFirstOneToManyDZ.Tests
             Assert.That(_context.Users.FirstOrDefault().Username, Is.EqualTo("Max"));
             Assert.That(_context.Users.FirstOrDefault().Password, Is.EqualTo("111"));
             Assert.That(_context.Users.FirstOrDefault().Access, Is.EqualTo("access"));
+        }
 
+        [Test]
+        public void GetById_ShouldReturnPeopleWithId()
+        {
+            int id = 2;
+            var user = new User { Username = "Max", Password = "111", Access = "access" };
+            _context?.Users.Add(user);
+            user = new User { Username = "Alex", Password = "222", Access = "customer" };
+            _context?.Users.Add(user);
+            _context?.SaveChanges();
 
+            var result = _context.Users.FirstOrDefault(u => u.Id == id);
 
+            Assert.That(result.Username, Is.EqualTo("Alex"));
+            Assert.That(result.Password, Is.EqualTo("222"));
+            Assert.That(result.Access, Is.EqualTo("customer"));
+        }
+
+        [Test]
+        public void Update_ShouldUpdateUserWithName()
+        {
+            string name = "Alex", access = "admin";
+
+            var user = new User { Username = "Max", Password = "111", Access = "access" };
+            _context?.Users.Add(user);
+            user = new User { Username = "Alex", Password = "222", Access = "customer" };
+            _context?.Users.Add(user);
+            _context?.SaveChanges();
+
+            var result = _context.Users.FirstOrDefault(u => u.Username == name);
+            result.Access = access;
+            _context.SaveChanges();
+
+            Assert.That(result.Access, Is.EqualTo("admin"));
+        }
+
+        [Test]
+        public void Delete_ShouldDeleteUserWithId()
+        {
+            int id = 1;
+            var user = new User { Username = "Max", Password = "111", Access = "access" };
+            _context?.Users.Add(user);
+            user = new User { Username = "Alex", Password = "222", Access = "customer" };
+            _context?.Users.Add(user);
+            _context?.SaveChanges();
+
+            var usr = _context.Users.FirstOrDefault(p => p.Id == id);
+            _context.Users.Remove(usr);
+            _context.SaveChanges();
+
+            Assert.That(_context.Users.Count, Is.EqualTo(1));
+
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _context?.Database.EnsureDeleted();
         }
 
 
