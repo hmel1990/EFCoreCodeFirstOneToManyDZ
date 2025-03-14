@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EFCoreCodeFirstOneToManyDZ.Context;
-using EFCoreCodeFirstOneToManyDZ.Models;
+using EFCoreCodeFirstOneToManyDZ;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreCodeFirstOneToManyDZ.Repositories
