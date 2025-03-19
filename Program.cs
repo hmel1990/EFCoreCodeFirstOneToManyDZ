@@ -1,7 +1,9 @@
 ﻿using EFCoreCodeFirstOneToManyDZ;
 using EFCoreCodeFirstOneToManyDZ.Repositories;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text;
 
 namespace EFCoreCodeFirstOneToManyDZ
 {
@@ -9,28 +11,31 @@ namespace EFCoreCodeFirstOneToManyDZ
     {
         static void Main()
         {
-            //var ct = new CategoryRepository();
-            //ct.AddCategory("Молочные продукты");
-            var usr = new UserRepository();
-            //usr.AddUser("Max", "111", "customer");
-            //usr.AddUser("Alex", "111", "customer");
-            //usr.AddUser("Igor", "111", "customer");
-            //usr.AddUser("Daniel", "111", "customer");
-            //usr.AddUser("Sasha", "111", "customer");
-            //usr.AddUser("Maria", "111", "customer");
+            Console.OutputEncoding = Encoding.Unicode;
 
-            //var prt = new ProductRepository();
-            //prt.AddProduct("Молочные продукты", "молоко", 10, 2, "Гормолзавод");
-            var rvw = new ReviewRepository();
-            //rvw.AddReview("text1");
-            //rvw.AddReview("text2");
-            //rvw.AddReview("text3");
-            //rvw.AddReview("text4");
-            //rvw.AddReview("text5");
-            //rvw.AddReview("text6");
+            string connectionString = "Server=localhost;Database=MarketPlace;Trusted_Connection=True;TrustServerCertificate=True;";
 
-            usr.GetAllPeopleWithReviews();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
+                var product = new ProductRepository();
+
+                product.AddProductDapper(connection, "testDapper", (float)10.00, 10);
+
+                var products = product.GetAllDapper(connection);
+                foreach (var prt in products)
+                {
+                    Console.WriteLine(prt.Name);
+                }
+
+                var prt2 = product.GetByIdDapper(connection, 3);
+                Console.WriteLine(prt2.Name);
+
+                product.UpdateDapper(connection, 3, "testDapperNew", (float)10.00, 10);
+
+                product.DeleteDapper(connection, 3);
+            }
         }
     }
 }
